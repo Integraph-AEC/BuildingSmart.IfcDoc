@@ -101,8 +101,9 @@ namespace BuildingSmart.Utilities.Dictionary
 			string module = assembly + ".dll";
 			ConstructorInfo conContract = (typeof(AssemblyVersionAttribute).GetConstructor(new Type[] { typeof(string) }));
 			CustomAttributeBuilder cabAssemblyVersion = new CustomAttributeBuilder(conContract, new object[] { version });
-			dd.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(assembly), AssemblyBuilderAccess.RunAndSave, new CustomAttributeBuilder[] { cabAssemblyVersion });
-			dd.m_module = dd.m_assembly.DefineDynamicModule(module, module);
+			//dd.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(assembly), AssemblyBuilderAccess.RunAndSave, new CustomAttributeBuilder[] { cabAssemblyVersion });
+			dd.m_assembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(assembly), AssemblyBuilderAccess.Run, new CustomAttributeBuilder[] { cabAssemblyVersion });
+			dd.m_module = dd.m_assembly.DefineDynamicModule(module);
 			return dd;
 		}
 
